@@ -78,7 +78,7 @@ if ($user->isLoggedIn()) {
      <div class="row">
        <div class="col-md-8">
          <h1>Изменить пароль</h1>
-           <?php if (Session::flash('success')) : ?>
+           <?php if (Session::exists('success')) : ?>
                <div class="alert alert-success">
                    <?php echo Session::flash('success'); ?>
                </div>

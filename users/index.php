@@ -1,8 +1,7 @@
 <?php
 require_once '../init.php';
 $user = new User();
-var_dump($_SESSION);
-echo Session::flash('success');
+
 if (!$user->hasPermissions('admin')) {
     Redirect::to('../index.php');
 }
@@ -53,7 +52,7 @@ $users = Database::getInstance()->results();
   </nav>
 
     <div class="container">
-        <?php if (isset($_SESSION['success'])) : ?>
+        <?php if (Session::exists('success')) : ?>
             <div class="alert alert-success">
                 <?php echo Session::flash('success') ?>
             </div>

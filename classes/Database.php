@@ -144,10 +144,11 @@ class Database {
         $set = '';
         //меняем ключ на ?
         foreach ($fields as $key => $field) {
-            $set .= "{$key} = ?"; //username = ?, password = ?
+            $set .= "{$key} = ?,"; //username = ?, password = ?
         }
 
         $set = rtrim($set, ',');
+
         $sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
 
         //если без ошибок - возвращаем true;

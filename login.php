@@ -55,7 +55,7 @@ if (Input::exists()) {
             </div>
         <?php endif; ?>
 
-        <?php if (Session::flash('success')) : ?>
+        <?php if (Session::exists('success')) : ?>
         <div class="alert alert-success">
           <?php echo Session::flash('success'); ?>
         </div>

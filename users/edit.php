@@ -2,8 +2,9 @@
 require_once '../init.php';
 
 $user = new User();
-$edit_user = new User(Input::get('id'));
 $validate = new Validate();
+
+$edit_user = new User(Input::get('id'));
 
 if ($user->isLoggedIn() && $user->hasPermissions('admin')) {
 
@@ -16,8 +17,10 @@ if ($user->isLoggedIn() && $user->hasPermissions('admin')) {
             ]);
 
             if ($validate->passed()) {
-                $edit_user->update(['username' => Input::get('username')], Input::get('id'));
-                $edit_user->update(['status' => Input::get('status')], Input::get('id'));
+
+                $user->update([
+                    'username' => Input::get('username'),
+                    'status' => Input::get('status')], Input::get('id'));
                 Session::flash('success', 'Профиль успешно обновлен!');
                 Redirect::to('index.php');
             }
@@ -73,7 +76,7 @@ if ($user->isLoggedIn() && $user->hasPermissions('admin')) {
     <div class="row">
         <div class="col-md-8">
             <h1>Профиль пользователя - <?php echo $edit_user->data()->username?></h1>
-            <?php if (Session::flash('success')) : ?>
+            <?php if (Session::exists('success')) : ?>
                 <div class="alert alert-success">
                     <?php echo Session::flash('success') ?>
                 </div>

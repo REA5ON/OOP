@@ -1,12 +1,14 @@
 <?php
 require_once 'init.php';
 
+echo Session::flash('success');
 $user = new User();
 $validate = new Validate();
 
 if ($user->isLoggedIn()) {
 
     if (Input::exists()) {
+
         if (Token::check(Input::get('token'))) {
             $validate->check($_POST, [
                 'username' => ['required' => true, 'min' => 3],
@@ -14,8 +16,9 @@ if ($user->isLoggedIn()) {
             ]);
 
             if ($validate->passed()) {
-                $user->update(['username' => Input::get('username')], Input::get('id'));
-                $user->update(['status' => Input::get('status')], Input::get('id'));
+                $user->update([
+                    'username' => Input::get('username'),
+                    'status' => Input::get('status')]);
                 Session::flash('success', 'Профиль успешно обновлен!');
                 Redirect::to('profile.php');
             }
@@ -74,12 +77,11 @@ if ($user->isLoggedIn()) {
     <div class="row">
         <div class="col-md-8">
             <h1>Профиль пользователя - <?php echo $user->data()->username ?></h1>
-            <?php if (Session::get('success')) : ?>
-                <div class="alert alert-success">
-                    <?php echo Session::flash('success') ?>
-                </div>
-            <?php endif; ?>
-
+<!--            --><?php //if (Session::exists('success')) : ?>
+<!--                <div class="alert alert-success">-->
+<!--                    --><?php //echo Session::flash('success') ?>
+<!--                </div>-->
+<!--            --><?php //endif; ?>
             <?php $errors = $validate->errors();
             if(!empty($errors)) : ?>
                 <div class="alert alert-danger">
