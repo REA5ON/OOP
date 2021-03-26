@@ -1,14 +1,10 @@
 <?php
 require_once 'init.php';
-
-echo Session::flash('success');
-$user = new User();
+$user = new User;
 $validate = new Validate();
 
 if ($user->isLoggedIn()) {
-
     if (Input::exists()) {
-
         if (Token::check(Input::get('token'))) {
             $validate->check($_POST, [
                 'username' => ['required' => true, 'min' => 3],
@@ -19,6 +15,7 @@ if ($user->isLoggedIn()) {
                 $user->update([
                     'username' => Input::get('username'),
                     'status' => Input::get('status')]);
+
                 Session::flash('success', 'Профиль успешно обновлен!');
                 Redirect::to('profile.php');
             }
@@ -28,7 +25,6 @@ if ($user->isLoggedIn()) {
     Redirect::to('index.php');
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,14 +70,14 @@ if ($user->isLoggedIn()) {
 </nav>
 
 <div class="container">
+    <?php if (Session::exists('success')) : ?>
+        <div class="alert alert-success">
+            <?php echo Session::flash('success') ?>
+        </div>
+    <?php endif; ?>
     <div class="row">
         <div class="col-md-8">
             <h1>Профиль пользователя - <?php echo $user->data()->username ?></h1>
-<!--            --><?php //if (Session::exists('success')) : ?>
-<!--                <div class="alert alert-success">-->
-<!--                    --><?php //echo Session::flash('success') ?>
-<!--                </div>-->
-<!--            --><?php //endif; ?>
             <?php $errors = $validate->errors();
             if(!empty($errors)) : ?>
                 <div class="alert alert-danger">
@@ -92,7 +88,6 @@ if ($user->isLoggedIn()) {
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-
             <ul>
                 <li><a href="changepassword.php?id=<?php echo $user->data()->id?>">Изменить пароль</a></li>
             </ul>
@@ -104,13 +99,13 @@ if ($user->isLoggedIn()) {
                 </div>
                 <div class="form-group">
                     <label for="status">Статус</label>
-                    <input type="text" id="status" name="status" class="form-control"
+                    <input type="text" id="username" name="status" class="form-control"
                            value="<?php echo $user->data()->status ?>">
                 </div>
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
 
                 <div class="form-group">
-                    <button class="btn btn-warning">Обновить</button>
+                    <button class="btn btn-warning" type="submit">Обновить</button>
                 </div>
             </form>
 

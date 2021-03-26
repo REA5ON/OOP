@@ -1,30 +1,26 @@
 <?php
 
 class Session {
-    //Запись в сессию
-    public static function put ($name, $value) {
+    public static function put($name, $value) {
         return $_SESSION[$name] = $value;
     }
 
-    //Существует ли в сессии значение $name
     public static function exists($name) {
         return (isset($_SESSION[$name])) ? true : false;
     }
 
-    //Удаление записи из сессии
-    public static function delete ($name) {
-        if (self::exists($name)) {
+    public static function delete($name) {
+        if(self::exists($name)) {
             unset($_SESSION[$name]);
         }
     }
 
-    //Получение записи из сессии
-    public static function get ($name) {
+    public static function get($name) {
         return $_SESSION[$name];
     }
 
     public static function flash($name, $string = '') {
-        if (self::exists($name) && self::get($name) !== '') {
+        if(self::exists($name) && self::get($name) !== '') {
             $session = self::get($name);
             self::delete($name);
             return $session;
@@ -32,4 +28,17 @@ class Session {
             self::put($name, $string);
         }
     }
+
+//    public static function set_flash_message($name, $message)
+//    {
+//        $_SESSION[$name] = $message;
+//    }
+//
+//    public static function display_flash_message($name)
+//    {
+//        if (isset($_SESSION[$name])) {
+//            echo "<div class=\"alert alert-{$name} text-dark\" role=\"alert\">{$_SESSION[$name]}</div>";
+//            unset($_SESSION[$name]);
+//        }
+//    }
 }

@@ -3,7 +3,6 @@ require_once 'init.php';
 
 $user = new User(Input::get('id'));
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,8 +63,6 @@ $user = new User(Input::get('id'));
              </tr>
            </tbody>
          </table>
-
-
        </div>
      </div>
    </div>

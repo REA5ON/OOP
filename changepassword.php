@@ -80,7 +80,7 @@ if ($user->isLoggedIn()) {
          <h1>Изменить пароль</h1>
            <?php if (Session::exists('success')) : ?>
                <div class="alert alert-success">
-                   <?php echo Session::flash('success'); ?>
+                   <?php echo Session::flash('success') ?>
                </div>
            <?php endif; ?>
 

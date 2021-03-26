@@ -2,8 +2,8 @@
 require_once '../init.php';
 $user = new User();
 
-if (!$user->hasPermissions('admin')) {
-    Redirect::to('../index.php');
+if (!$user->isLoggedIn() || !$user->hasPermissions('admin')) {
+    Redirect::to('../profile.php');
 }
 
 $users = Database::getInstance()->get('users', ['id', '>', 0]);

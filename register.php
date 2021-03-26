@@ -2,11 +2,8 @@
 require_once 'init.php';
 
 $validate = new Validate();
-$user = new User;
-//Выполняем всю проверку
-if (Input::exists()) { //Была ли отправлена форма. Если да то начинаем функцию валидации
 
-
+if (Input::exists()) {
     $validation = $validate->check($_POST, [
         'username' => [
             'required' => true,
@@ -28,16 +25,14 @@ if (Input::exists()) { //Была ли отправлена форма. Если
         ]
     ]);
 
-    //Если проверка выполнена - выводим 'passed'
     if ($validation->passed()) {
-
+        $user = new User;
 
         $user->create([
             'date_registered' => date("d/m/Y"),
             'email' => Input::get('email'),
             'username' => Input::get('username'),
-            'password' => password_hash(Input::get('password'), PASSWORD_DEFAULT),
-            'status' => ''
+            'password' => password_hash(Input::get('password'), PASSWORD_DEFAULT)
         ]);
 
         Session::flash('success', 'Регистрация успешна!');

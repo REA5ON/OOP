@@ -4,7 +4,8 @@ require_once '../init.php';
 $user = new User();
 $validate = new Validate();
 
-$edit_user = new User(Input::get('id'));
+$edit_user = Database::getInstance()->get('users', ['id', '=', Input::get('id')]);
+$edit_user = Database::getInstance()->first();
 
 if ($user->isLoggedIn() && $user->hasPermissions('admin')) {
 
@@ -75,7 +76,7 @@ if ($user->isLoggedIn() && $user->hasPermissions('admin')) {
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h1>Профиль пользователя - <?php echo $edit_user->data()->username?></h1>
+            <h1>Профиль пользователя - <?php echo $edit_user->username?></h1>
             <?php if (Session::exists('success')) : ?>
                 <div class="alert alert-success">
                     <?php echo Session::flash('success') ?>
@@ -95,11 +96,11 @@ if ($user->isLoggedIn() && $user->hasPermissions('admin')) {
             <form action="" method="post" class="form">
                 <div class="form-group">
                     <label for="username">Имя</label>
-                    <input type="text" id="username" name="username" class="form-control" value="<?php echo $edit_user->data()->username?>">
+                    <input type="text" id="username" name="username" class="form-control" value="<?php echo $edit_user->username?>">
                 </div>
                 <div class="form-group">
                     <label for="status">Статус</label>
-                    <input type="text" id="status" name="status" class="form-control" value="<?php echo $edit_user->data()->status?>">
+                    <input type="text" id="status" name="status" class="form-control" value="<?php echo $edit_user->status?>">
                 </div>
                 <input type="hidden" name="token" value="<?php echo Token::generate() ?>">
 

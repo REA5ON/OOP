@@ -43,6 +43,11 @@ if (Input::exists()) {
     <form class="form-signin" action="" method="post">
     	  <img class="mb-4" src="images/apple-touch-icon.png" alt="" width="72" height="72">
     	  <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+        <?php if (Session::exists('success')) : ?>
+            <div class="alert alert-success">
+                <?php echo Session::flash('success') ?>
+            </div>
+        <?php endif; ?>
 
         <?php $errors = $validate->errors();
         if(!empty($errors)) : ?>
@@ -53,12 +58,6 @@ if (Input::exists()) {
                     </ul>
                 <?php endforeach; ?>
             </div>
-        <?php endif; ?>
-
-        <?php if (Session::exists('success')) : ?>
-        <div class="alert alert-success">
-          <?php echo Session::flash('success'); ?>
-        </div>
         <?php endif; ?>
 
     	  <div class="form-group">
